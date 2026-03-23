@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:reroll_app_v2/main/main_screen.dart';
 
 class main_back_screen extends StatefulWidget{
   const main_back_screen({super.key});
@@ -10,7 +11,7 @@ class main_back_screen extends StatefulWidget{
 class _main_back_screenState extends State<main_back_screen> {
  int _selectedIndex = 0;
  final List<Widget> _screen= [
-   Center(child: Text('홈 화면')),
+   main_screen(),
    Center(child: Text('경기정보 화면')),
    Center(child: Text('게시판 화면')),
    Center(child: Text('채팅 화면')),

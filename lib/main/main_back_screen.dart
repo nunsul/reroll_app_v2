@@ -28,25 +28,35 @@ class _main_back_screenState extends State<main_back_screen> {
               _selectedIndex = index;
             });
           },
+          selectedItemColor: Color(0xff26485F),
+          unselectedItemColor: Color(0xff26485F).withOpacity(0.3),
+          selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold,color: Color(0xff26485F)),
+          unselectedLabelStyle: TextStyle(fontWeight: FontWeight.bold,color: Color(0xff26485F).withOpacity(0.3)),
+          selectedFontSize: 12,
+          unselectedFontSize: 12,
+          showUnselectedLabels: true,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          elevation: 3,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.home_outlined,size: 24,),
               label: '홈',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.sports_esports),
+              icon: Icon(Icons.calendar_today_outlined,size: 20,),
               label: '경기정보',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.article),
+              icon: Icon(Icons.assignment_outlined,size: 20,),
               label: '게시판',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.chat),
+              icon: Icon(Icons.chat,size: 20,),
               label: '채팅',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.person,size: 20,),
               label: '마이페이지',
             ),
           ]),

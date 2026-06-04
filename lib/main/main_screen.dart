@@ -30,7 +30,8 @@ class _main_screen extends State<main_screen>{
           }, icon: Icon(Icons.dehaze_rounded),),
         ],
       ),
-      body: SingleChildScrollView(
+      body: SafeArea(
+    child: SingleChildScrollView(
         child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 18,vertical: 15),
                 child: Column(
@@ -81,6 +82,7 @@ class _main_screen extends State<main_screen>{
         ),
         )
       ),
+      )
     );
 
   }

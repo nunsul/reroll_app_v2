@@ -1,204 +1,124 @@
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:reroll_app_v2/login/login_phone.dart';
 
-class login_create_account extends StatefulWidget {
-  const login_create_account({super.key});
-
+class login_name extends StatefulWidget{
+  const login_name ({super.key});
   @override
-  State<login_create_account> createState() => _login_create_account();
+  State<login_name> createState() => _login_name();
 }
-
-class _login_create_account extends State<login_create_account> {
-  final _email = TextEditingController();
-  final _password = TextEditingController();
-  final _name = TextEditingController();
-  final _phone = TextEditingController();
-  final _password2 = TextEditingController();
-  final _phone2 = TextEditingController();
-
-  String? emailError;
-
+class _login_name extends State<login_name>{
+ final name = TextEditingController();
+ String? errorText;
   @override
-  void dispose() {
-    _email.dispose();
-    _password.dispose();
-    _name.dispose();
-    _phone.dispose();
-    _password2.dispose();
-    _phone2.dispose();
+  void dispose(){
+    name.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
+    return GestureDetector(
+    behavior: HitTestBehavior.opaque,
+        onTap: (){
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+            iconTheme: IconThemeData(
+              color: Colors.white
+            ),
+          ),
+         bottomNavigationBar: SafeArea(
+              child:SizedBox(
+                width: double.infinity,
+                height: 70,
+                child: ElevatedButton(onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>login_phone()));
+                },style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  )
+                ), child: Text('다음',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
+              )
+          ),
+        resizeToAvoidBottomInset: true,
         backgroundColor: Colors.black,
-        centerTitle: true,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 35),
-          child: Text(
-            '정보입력',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: Colors.white,
-            ),
-          ),
+        body: SafeArea(
+            child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20,vertical: 40),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('''닉네임을
+입력해주세요''',style: TextStyle(fontSize: 30,color: Colors.white),),
+                      SizedBox(height: 25,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                        Container(
+                          height: 4,
+                          width: 20,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 2,),
+                        Container(
+                          height: 4,
+                          width: 20,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(width: 2,),
+                        Container(
+                          height: 4,
+                          width: 20,
+                          color: Colors.grey,
+                        ),
+                      ],
+                      ),
+                      SizedBox(height: 130,),
+                      TextField(
+                        controller: name,
+                        onChanged: (va){
+                          setState(() {
+                            if(va.isEmpty) errorText = null;
+                            else if(va.length<=2 || va.contains(" ") || va.length>12) errorText = '공백없이 2자 이상 12자 이하로 입력해주세요.';
+                            else errorText = null;
+                          });
+                        },
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: '닉네임을 입력하세요.',
+                          hintStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                            )
+                          )
+                        ),
+                      ),
+                      SizedBox(height: 6,),
+                      if(errorText != null)
+                        Text(
+                          errorText!,
+                          style: TextStyle(
+                            color: Colors.red,
+                          ),
+                        )
+                    ],
+                  ),
+                ))
         ),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(
-              top: 70,
-              bottom: 10,
-              left: 25,
-              right: 25,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                text_in(text: '아이디(이메일)'),
-                SizedBox(height: 15),
-
-                login_textField(
-                  controller: _email,
-                  hinttext: '아이디(이메일)',
-                  errorText: emailError,
-                  onChanged: (value) {
-                    setState(() {
-                      if (value.isEmpty) {
-                        emailError = null;
-                      } else if (!RegExp(
-                        r'^[^@]+@[^@]+\.[^@]+',
-                      ).hasMatch(value)) {
-                        emailError = '올바른 이메일 형식이 아닙니다.';
-                      } else {
-                        emailError = null;
-                      }
-                    });
-                  },
-                ),
-
-                SizedBox(height: 15),
-
-                text_in(text: '닉네임'),
-                SizedBox(height: 9),
-                login_textField(
-                  controller: _name,
-                  hinttext: '닉네임',
-                ),
-
-                SizedBox(height: 15),
-
-                text_in(text: '비밀번호'),
-                SizedBox(height: 9),
-                login_textField(
-                  controller: _password,
-                  hinttext: '비밀번호',
-                ),
-
-                SizedBox(height: 15),
-
-                text_in(text: '비밀번호 확인'),
-                SizedBox(height: 9),
-                login_textField(
-                  controller: _password2,
-                  hinttext: '비밀번호 확인',
-                ),
-
-                SizedBox(height: 15),
-
-                text_in(text: '휴대폰 번호'),
-                SizedBox(height: 9),
-                login_textField(
-                  controller: _phone,
-                  hinttext: '휴대폰 번호',
-                ),
-
-                SizedBox(height: 15),
-
-                text_in(text: '인증번호 입력'),
-                SizedBox(height: 9),
-                login_textField(
-                  controller: _phone2,
-                  hinttext: '인증번호 입력',
-                ),
-
-                SizedBox(height: 65),
-              ],
-            ),
-          ),
         ),
-      ),
-      bottomNavigationBar: SafeArea(child: Padding(padding: EdgeInsets.only(left: 25,right: 25,bottom: 25),
-      child: SizedBox(
-        width: double.infinity,
-        height: 65,
-        child: ElevatedButton(onPressed: (){
-
-      },style: ElevatedButton.styleFrom(
-        backgroundColor: Color(0xff2b515d),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-        )
-      ), child: Text('다음',style: TextStyle(fontSize: 16,color: Colors.white),)),)) )
+      
     );
+
   }
-}
-
-Widget login_textField({
-  required TextEditingController controller,
-  required String hinttext,
-  String? errorText,
-  Function(String)? onChanged,
-}) {
-  return TextField(
-    controller: controller,
-    onChanged: onChanged,
-    style: TextStyle(
-      color: Colors.white,
-    ),
-    decoration: InputDecoration(
-      hintText: hinttext,
-
-      hintStyle: TextStyle(
-        color: Colors.white.withOpacity(0.5),
-        fontSize: 12,
-      ),
-
-      errorText: errorText,
-
-      errorStyle: TextStyle(
-        color: Colors.red,
-        fontSize: 12,
-      ),
-
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14),
-      ),
-
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14),
-        borderSide: BorderSide(
-          color: Colors.white,
-        ),
-      ),
-    ),
-  );
-}
-
-Widget text_in({
-  required String text,
-}) {
-  return Text(
-    text,
-    style: TextStyle(
-      color: Colors.white,
-      fontSize: 12,
-    ),
-  );
 }
